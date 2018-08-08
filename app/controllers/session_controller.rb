@@ -8,6 +8,7 @@ class SessionController < ApplicationController
       session[:user_id] = user.id
       redirect_to admin_url
     else
+      # failed to login
       redirect_to login_url, alert: "Invalid user/password combination"
     end
   end
