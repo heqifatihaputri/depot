@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+<% unless cart.line_items.empty? %>
+<h2>Your Pragmatic Cart</h2>
+<table>
+  <%= render (@cart.line_items) %>
+  <% total_price = 0.0 %>
+  <% @cart.line_items.each do |item| %>
+    <tr>
+      <td><%= item.quantity %> ×</td>
+      <td><%= item.product.title %></td>
+      <td class="item_price"><%= number_to_currency(item.quantity * item.product.price, unit: "$ ", delimiter: ".", separator: ",") %></td>
+    </tr>
+    <% total_price += (item.quantity * item.product.price) %>
+  <% end %>
+  <tr class="total_line">
+    <td colspan="2">Total</td>
+    <td class="total_cell"><%= number_to_currency(total_price, unit: "$ ", delimiter: ".", separator: ",") %></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td> <%= button_to "Checkout", new_order_path, method: :get %> </td>
+    <td><%= button_to 'Empty Cart', @cart, method: :delete, data: { confirm: 'Are You Sure?' } %></td>
+  </tr>
+</table>
+
+<% end %>
